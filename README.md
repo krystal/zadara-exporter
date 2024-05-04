@@ -2,7 +2,17 @@
 
 A Prometheus exporter for Zadara Storage.
 
-Uses otel metrics to collect data from Zadara Storage and expose it as Prometheus metrics.
+## Overview
+The Zadara Exporter is a Prometheus exporter designed to collect data from Zadara Storage and expose it as Prometheus metrics. It utilizes otel metrics to gather the data.
+
+## Features
+- Collects data from Zadara Storage
+- Exposes data as Prometheus metrics
+- Configurable through environment variables, a configuration file, or command line flags
+
+## Usage
+To start the Zadara Exporter server, run the following command:
+
 
 ```sh
 ❯ zadara-exporter server 
