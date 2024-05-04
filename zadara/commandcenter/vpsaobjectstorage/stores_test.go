@@ -52,6 +52,7 @@ func TestClient_GetStores(t *testing.T) {
 	assert.Equal(t, 2, resp.Count)
 }
 
+//nolint:funlen // most of this length is due to the test data
 func TestZiosResponse(t *testing.T) {
 	t.Parallel()
 
