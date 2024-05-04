@@ -44,7 +44,12 @@ type (
 	}
 )
 
-// GetStoragePolicies returns the list of a VPSA Object Storage storage policies.
+// GetStoragePolicies retrieves the storage policies for a specific Zios object in a cloud.
+// It takes a context, cloud name, and Zios ID as input parameters.
+// It returns a pointer to a ZiosStoragePoliciesResponse struct and an error.
+// The ZiosStoragePoliciesResponse struct contains the response data from the API call.
+// If there is an error creating the request, sending the request, closing the response body,
+// or decoding the response, an error is returned.
 //
 // API Docs
 // Returns the list of a VPSA Object Storage storage policies.

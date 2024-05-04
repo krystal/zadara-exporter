@@ -13,6 +13,8 @@ type (
 	}
 )
 
+// RoundTrip executes a single HTTP transaction, adding the X-Token header to the request.
+// It returns the response received from the server or an error if the request fails.
 func (t *addTokenHeaderTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	req.Header.Add("X-Token", t.token)
 
@@ -24,6 +26,8 @@ func (t *addTokenHeaderTransport) RoundTrip(req *http.Request) (*http.Response, 
 	return res, nil
 }
 
+// newAddTokenHeaderTransport creates a new transport that adds a token header to each request.
+// If the provided roundTripper is nil, it defaults to http.DefaultTransport.
 func newAddTokenHeaderTransport(
 	roundTripper http.RoundTripper,
 	token string,

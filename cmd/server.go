@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// NewServerCommand : creates a new server command for the zadara-exporter.
+// NewServerCommand creates a new server command for the zadara-exporter.
 func NewServerCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "server",

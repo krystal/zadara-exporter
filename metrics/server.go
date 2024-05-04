@@ -10,7 +10,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-// Serve : serves the metrics for the zadara-exporter.
+// Serve starts an HTTP server that serves the metrics on the "/metrics" endpoint.
+// It listens on port 8080 and gracefully shuts down when the provided context is done.
+// The function returns an error if there was an issue starting or shutting down the server.
 func Serve(ctx context.Context) error {
 	mux := http.NewServeMux()
 

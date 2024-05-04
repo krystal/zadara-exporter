@@ -8,7 +8,8 @@ import (
 	"go.opentelemetry.io/otel/sdk/metric"
 )
 
-// SetupPrometheusExporter : sets up the prometheus exporter for the metrics.
+// SetupPrometheusExporter initialises and sets up the Prometheus exporter for metrics.
+// It creates a new Prometheus exporter, sets it as the meter provider, and returns any error encountered.
 func SetupPrometheusExporter() error {
 	exporter, err := prometheus.New()
 	if err != nil {

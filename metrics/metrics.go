@@ -1,4 +1,4 @@
-// Package metrics : provides the metrics for the zadara-exporter.
+// Package metrics provides the metrics for the zadara-exporter.
 package metrics
 
 import (
@@ -11,13 +11,13 @@ import (
 )
 
 type (
-	// StorageMetrics : provides the metrics for the storage.
+	// StorageMetrics provides the metrics for the storage.
 	StorageMetrics struct {
 		FreeStorage metric.Int64ObservableGauge
 		UsedStorage metric.Int64ObservableGauge
 	}
 
-	// ZadaraClient : provides the client for the Zadara storage.
+	// ZadaraClient provides the client for the Zadara storage.
 	ZadaraClient interface {
 		GetAllStoragePolicies(
 			ctx context.Context,
@@ -26,7 +26,8 @@ type (
 	}
 )
 
-// NewStorageMetrics : creates a new storage metrics for the zadara-exporter.
+// NewStorageMetrics creates a new instance of StorageMetrics using the provided meter.
+// It returns a pointer to the created StorageMetrics and an error, if any.
 func NewStorageMetrics(meter metric.Meter) (*StorageMetrics, error) {
 	freeStorage, err := meter.Int64ObservableGauge("zadara_free_storage",
 		metric.WithDescription("The amount of free storage in the Zadara storage."))
@@ -46,7 +47,10 @@ func NewStorageMetrics(meter metric.Meter) (*StorageMetrics, error) {
 	}, nil
 }
 
-// RegisterStorageMetrics : registers the storage metrics for the zadara-exporter.
+// RegisterStorageMetrics registers storage metrics for the given Zadara client.
+// It creates storage metrics using the provided meter and registers the metrics
+// callback to observe the storage metrics for the client.
+// Returns an error if there was a failure in creating or registering the metrics.
 func RegisterStorageMetrics(client ZadaraClient) error {
 	meter := otel.Meter("zadara")
 

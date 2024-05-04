@@ -56,7 +56,10 @@ type (
 	}
 )
 
-// GetStores returns a list of all VPSA Object Storage object stores.
+// GetStores retrieves the ZiosResponse for a specific cloudName.
+// It sends an HTTP GET request to the Zadara API to fetch the stores information.
+// The cloudName parameter specifies the name of the cloud.
+// The function returns a pointer to the ZiosResponse and an error, if any.
 //
 // API Docs
 // Returns a list of all VPSA Object Storage object stores.

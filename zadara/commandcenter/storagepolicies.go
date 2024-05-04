@@ -7,7 +7,8 @@ import (
 	"github.com/krystal/zadara-exporter/zadara/commandcenter/vpsaobjectstorage"
 )
 
-// GetAllStoragePolicies : gets all storage policies for a cloud.
+// GetAllStoragePolicies retrieves all storage policies for a given cloud.
+// It returns a slice of ZiosStoragePolicy objects and an error, if any.
 func (c *Client) GetAllStoragePolicies(
 	ctx context.Context,
 	cloudName string,
