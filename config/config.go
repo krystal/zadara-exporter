@@ -2,8 +2,6 @@
 package config
 
 import (
-	"errors"
-	"fmt"
 	"log/slog"
 
 	"github.com/spf13/viper"
@@ -34,11 +32,7 @@ func Setup() error {
 	}
 
 	if err := viper.ReadInConfig(); err != nil {
-		if errors.Is(err, viper.ConfigFileNotFoundError{}) {
-			slog.Warn("config file not found")
-		} else {
-			return fmt.Errorf("error reading config file: %w", err)
-		}
+		slog.Warn("Could not read config file", "error", err)
 	}
 
 	return nil
