@@ -3,6 +3,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // NewRootCommand creates a new root command for the zadara-exporter.
@@ -11,6 +12,10 @@ func NewRootCommand() *cobra.Command {
 		Use:   "zadara-exporter",
 		Short: "Zadara exporter for Prometheus",
 	}
+
+	cmd.PersistentFlags().String("config", "", "The path to the configuration file")
+
+	must(viper.BindPFlag("config", cmd.PersistentFlags().Lookup("config")))
 
 	cmd.AddCommand(NewServerCommand())
 

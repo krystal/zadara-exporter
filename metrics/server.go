@@ -4,10 +4,12 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"log/slog"
 	"net/http"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/spf13/viper"
 )
 
 // Serve starts an HTTP server that serves the metrics on the "/metrics" endpoint.
@@ -17,15 +19,20 @@ func Serve(ctx context.Context) error {
 	mux := http.NewServeMux()
 
 	// Create a new HTTP handler for serving the metrics.
-	mux.Handle("/metrics", promhttp.Handler())
+	mux.Handle(viper.GetString("listen_path"), promhttp.Handler())
 
 	const ReadHeaderTimeout = 10 * time.Second
 
 	server := &http.Server{
-		Addr:              ":8080",
+		Addr:              viper.GetString("listen_address"),
 		Handler:           mux,
 		ReadHeaderTimeout: ReadHeaderTimeout,
 	}
+
+	slog.Info("starting Metrics server",
+		"address", viper.GetString("listen_address"),
+		"path", viper.GetString("listen_path"),
+	)
 
 	// Start the HTTP server in a separate goroutine.
 	go func() {
