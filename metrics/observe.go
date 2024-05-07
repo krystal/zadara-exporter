@@ -56,7 +56,7 @@ func (sm *StorageMetrics) observeStores(
 	}
 
 	// Define the cloud name attribute.
-	cloudNameAttr := attribute.String("cloud_name", "cloudName")
+	cloudNameAttr := attribute.String("cloud_name", target.CloudName)
 	targeNameAttr := attribute.String("name", target.Name)
 
 	for _, ssc := range stores {
