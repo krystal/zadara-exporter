@@ -195,7 +195,7 @@ func RegisterStorageMetrics(targets []*config.Target) error {
 
 	_, err = meter.RegisterCallback(metrics.StorageMetricsObserve(targets,
 		func(_ context.Context, target *config.Target) ZadaraClient {
-			return commandcenter.NewClientFromToken(target.APIBaseURL, target.Token)
+			return commandcenter.NewClientFromToken(target.APIBaseURL, target.Token, target.CloudName)
 		}),
 		metrics.FreeStorage,
 		metrics.UsedStorage,

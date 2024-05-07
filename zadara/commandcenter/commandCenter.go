@@ -31,11 +31,9 @@ type (
 	}
 )
 
-// NewClientFromToken creates a new client for interacting with the Zadara Command
-// Centre API using the provided API token.
-// It takes the base URL of the Command Centre API and the API token as parameters.
+// NewClientFromToken creates a new client with the provided base URL, API token, and cloud name.
 // It returns a pointer to the created Client.
-func NewClientFromToken(baseURL, apiToken string) *Client {
+func NewClientFromToken(baseURL, apiToken, cloudName string) *Client {
 	httpClient := &http.Client{
 		Transport: newAddTokenHeaderTransport(http.DefaultTransport, apiToken),
 	}
@@ -43,13 +41,15 @@ func NewClientFromToken(baseURL, apiToken string) *Client {
 	return &Client{
 		BaseURL:           baseURL,
 		C:                 httpClient,
+		CloudName:         cloudName,
 		VPSAObjectStorage: vpsaobjectstorage.NewClient(baseURL, httpClient),
 	}
 }
 
 // NewClient creates a new instance of the Client struct.
-// It initialises the Client with the provided baseURL and http.Client.
-// It also initialises the VPSAObjectStorage field with a new instance of the vpsaobjectstorage.Client.
+// It initialises the Client with the provided baseURL, http.Client, and cloudName.
+// It also creates a new instance of the vpsaobjectstorage.Client and assigns
+// it to the VPSAObjectStorage field of the Client.
 func NewClient(baseURL string, c *http.Client, cloudName string) *Client {
 	return &Client{
 		BaseURL:           baseURL,

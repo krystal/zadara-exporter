@@ -15,8 +15,7 @@ type (
 	}
 )
 
-// GetAllStoragePolicies retrieves all storage policies for a given cloud.
-// It returns a slice of ZiosStoragePolicy objects and an error, if any.
+// GetAllStoragePolicies retrieves all storage policies for the client's cloud.
 func (c *Client) GetAllStoragePolicies(
 	ctx context.Context,
 ) ([]*StoreStoragePolicies, error) {
