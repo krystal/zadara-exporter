@@ -1,6 +1,6 @@
 package vpsaobjectstorage
 
-import "fmt"
+import "errors"
 
 // ErrResponse is an error returned when the response contains an error.
-var ErrResponse = fmt.Errorf("error in response")
+var ErrResponse = errors.New("error in response")

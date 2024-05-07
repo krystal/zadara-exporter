@@ -251,25 +251,25 @@ linters-settings:
     const-require-single-const: false
     # Require the use of grouped global 'const' declarations.
     # Default: false
-    const-require-grouping: true
+    const-require-grouping: false
     # Require the use of a single 'import' declaration only.
     # Default: false
     import-require-single-import: false
     # Require the use of grouped 'import' declarations.
     # Default: false
-    import-require-grouping: true
+    import-require-grouping: false
     # Require the use of a single global 'type' declaration only.
     # Default: false
     type-require-single-type: false
     # Require the use of grouped global 'type' declarations.
     # Default: false
-    type-require-grouping: true
+    type-require-grouping: false
     # Require the use of a single global 'var' declaration only.
     # Default: false
     var-require-single-var: false
     # Require the use of grouped global 'var' declarations.
     # Default: false
-    var-require-grouping: true
+    var-require-grouping: false
   errchkjson:
     # With check-error-free-encoding set to true, errchkjson does warn about errors
     # from json encoding functions that are safe to be ignored,
