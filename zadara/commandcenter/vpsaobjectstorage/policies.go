@@ -43,6 +43,7 @@ type (
 	// ZiosStoragePoliciesResponse represents the response of the GetStoragePolicies API.
 	ZiosStoragePoliciesResponse struct {
 		Status              string               `json:"status"`
+		Message             string               `json:"message"`
 		ZiosStoragePolicies []*ZiosStoragePolicy `json:"zios_storage_policies"`
 		Count               int                  `json:"count"`
 	}
@@ -88,6 +89,10 @@ func (c *Client) GetStoragePolicies(
 	var resp ZiosStoragePoliciesResponse
 	if err := json.NewDecoder(res.Body).Decode(&resp); err != nil {
 		return nil, fmt.Errorf("error decoding response: %w", err)
+	}
+
+	if res.StatusCode != http.StatusOK || resp.Status == "error" {
+		return nil, fmt.Errorf("%w: %s", ErrResponse, resp.Message)
 	}
 
 	return &resp, nil

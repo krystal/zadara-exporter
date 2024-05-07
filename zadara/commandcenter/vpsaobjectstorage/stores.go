@@ -50,9 +50,10 @@ type (
 
 	// ZiosResponse represents the response of the GetStores API.
 	ZiosResponse struct {
-		Status string  `json:"status"`
-		Zioses []*Zios `json:"zioses"`
-		Count  int     `json:"count"`
+		Status  string  `json:"status"`
+		Message string  `json:"message"`
+		Zioses  []*Zios `json:"zioses"`
+		Count   int     `json:"count"`
 	}
 )
 
@@ -98,6 +99,10 @@ func (c *Client) GetStores(
 	var resp ZiosResponse
 	if err := json.NewDecoder(res.Body).Decode(&resp); err != nil {
 		return nil, fmt.Errorf("error decoding response: %w", err)
+	}
+
+	if res.StatusCode != http.StatusOK || resp.Status == "error" {
+		return nil, fmt.Errorf("%w: %s", ErrResponse, resp.Message)
 	}
 
 	return &resp, nil
