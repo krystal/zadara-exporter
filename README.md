@@ -29,21 +29,24 @@ The exporter is configured using the following environment variables:
 - `ZADARA_LISTN_PATH`: The path to expose the metrics on. (default: `/metrics`)
 
 ### Config File
+> [!IMPORTANT]  
+> Target configuration is required for the exporter to work. The exporter will not start if there are no targets configured.
 
 The exporter can also be configured using a configuration file. The configuration file is a YAML file with the following structure:
 
 ```yaml
-listen_address: ':9091' # default: :9090
-listen_path: /metr # default: /metrics
+listen_address: :9090
+listen_path: /metrics
 targets:
-  - name: snakes
-    url: https://api.snakes.com
-    token: snakes
-    cloudName: snakes
-  - name: rats
-    url: https://api.rats.com
-    token: rats
-    cloudName: rats
+  - name: London
+    url: https://ccvm-krystal-01.zadarastorage.com:8888
+    token: "<TOKEN HERE>"
+    cloud_name: krystal-01
+  # - name: New York
+  #   url: https://ccvm-krystal-02.zadarastorage.com:8888
+  #   token: "<TOKEN HERE>"
+  #   cloud_name: krystal-02
+
 ```
 
 The configuration file can be specified using the `ZADARA_CONFIG_FILE` environment variable.
