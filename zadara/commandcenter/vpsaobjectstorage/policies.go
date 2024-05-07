@@ -13,27 +13,31 @@ import (
 type (
 	// RingBalance represents the balance of the ring.
 	RingBalance struct {
-		NormalPercentage   int `json:"normal_percentage"`
-		DegradedPercentage int `json:"degraded_percentage"`
-		CriticalPercentage int `json:"critical_percentage"`
-		NormalCount        int `json:"normal_count"`
-		DegradedCount      int `json:"degraded_count"`
-		CriticalCount      int `json:"critical_count"`
+		NormalPercentage   float64 `json:"normal_percentage"`
+		DegradedPercentage float64 `json:"degraded_percentage"`
+		CriticalPercentage float64 `json:"critical_percentage"`
+		NormalCount        int     `json:"normal_count"`
+		DegradedCount      int     `json:"degraded_count"`
+		CriticalCount      int     `json:"critical_count"`
 	}
 
 	// ZiosStoragePolicy represents a VPSA Object Storage storage policy.
 	ZiosStoragePolicy struct {
-		ID               string      `json:"id"`
-		InternalName     string      `json:"internal_name"`
-		Name             string      `json:"name"`
-		Status           string      `json:"status"`
-		Protection       string      `json:"protection"`
-		Default          interface{} `json:"default"`
-		HealthStatus     string      `json:"health_status"`
-		HealthPercentage int         `json:"health_percentage"`
-		RingBalance      RingBalance `json:"ring_balance"`
-		UsedCapacity     int64       `json:"used_capacity"`
-		FreeCapacity     int64       `json:"free_capacity"`
+		ID                                    int         `json:"id"`
+		InternalName                          string      `json:"internal_name"`
+		Name                                  string      `json:"name"`
+		Status                                string      `json:"status"`
+		Protection                            string      `json:"protection"`
+		RebalanceCurrentCompletionProjectedAt string      `json:"rebalance_current_completion_projected_at"`
+		RebalancePercentage                   float64     `json:"rebalance_percentage"`
+		PercentageDrivesAdded                 string      `json:"percentage_drives_added"`
+		RebalancingPaused                     bool        `json:"rebalancing_paused"`
+		Default                               bool        `json:"default"`
+		HealthStatus                          string      `json:"health_status"`
+		HealthPercentage                      int         `json:"health_percentage"`
+		RingBalance                           RingBalance `json:"ring_balance"`
+		UsedCapacity                          int64       `json:"used_capacity"`
+		FreeCapacity                          int64       `json:"free_capacity"`
 	}
 
 	// ZiosStoragePoliciesResponse represents the response of the GetStoragePolicies API.
