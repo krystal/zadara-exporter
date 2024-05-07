@@ -7,6 +7,16 @@ import (
 	"github.com/spf13/viper"
 )
 
+type (
+	// Target represents the configuration for a target.
+	Target struct {
+		APIBaseURL string `mapstructure:"api_base_url"`
+		CloudName  string `mapstructure:"cloud_name"`
+		Name       string `mapstructure:"name"`
+		Token      string `mapstructure:"token"`
+	}
+)
+
 // Setup initialises the configuration for the zadara-exporter.
 // It reads the configuration file in YAML format and sets up the configuration settings.
 // The configuration file is searched in the following paths, in order:

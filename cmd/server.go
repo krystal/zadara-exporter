@@ -6,7 +6,6 @@ import (
 
 	"github.com/krystal/zadara-exporter/config"
 	"github.com/krystal/zadara-exporter/metrics"
-	"github.com/krystal/zadara-exporter/zadara/commandcenter"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -36,9 +35,15 @@ func NewServerCommand() *cobra.Command {
 				return
 			}
 
-			zClient := commandcenter.NewClientFromToken(viper.GetString("api_base_url"), viper.GetString("token"))
+			var targets []*config.Target
+			err := viper.UnmarshalKey("targets", &targets)
+			if err != nil {
+				slog.Error("error unmarshalling targets", "error", err)
 
-			if err := metrics.RegisterStorageMetrics(zClient); err != nil {
+				return
+			}
+
+			if err := metrics.RegisterStorageMetrics(targets); err != nil {
 				slog.Error("error registering storage metrics", "error", err)
 
 				return
@@ -52,19 +57,14 @@ func NewServerCommand() *cobra.Command {
 		},
 	}
 
-	viper.SetDefault("api_base_url", "https://api.zadara.com")
 	viper.SetDefault("listen_address", ":9090")
 	viper.SetDefault("listen_path", "/metrics")
 
-	cmd.Flags().String("api_base_url", "https://api.zadara.com", "The base URL of the Zadara Command Centre API")
 	cmd.Flags().String("listen_address", ":9090", "The address to listen on for the metrics server")
 	cmd.Flags().String("listen_path", "/metrics", "The path to expose the metrics on")
-	cmd.Flags().String("token", "", "The API token for the Zadara Command Centre API")
 
-	must(viper.BindPFlag("api_base_url", cmd.Flags().Lookup("api_base_url")))
 	must(viper.BindPFlag("listen_address", cmd.Flags().Lookup("listen_address")))
 	must(viper.BindPFlag("listen_path", cmd.Flags().Lookup("listen_path")))
-	must(viper.BindPFlag("token", cmd.Flags().Lookup("token")))
 
 	return cmd
 }

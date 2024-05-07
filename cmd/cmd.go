@@ -6,6 +6,10 @@ import (
 	"github.com/spf13/viper"
 )
 
+// var (
+// 	Version = "0.0.0-dev"
+// ).
+
 // NewRootCommand creates a new root command for the zadara-exporter.
 func NewRootCommand() *cobra.Command {
 	cmd := &cobra.Command{

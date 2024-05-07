@@ -61,12 +61,12 @@ func TestZiosStoragePoliciesResponse(t *testing.T) {
 		"status": "success",
 		"zios_storage_policies": [
 		  {
-			"id": "26",
+			"id": 26,
 			"internal_name": "storage-policy-00000002",
 			"name": "3-way-protection-policy",
 			"status": "initialised",
 			"protection": "3-way",
-			"default": null,
+			"default": false,
 			"health_status": "normal",
 			"health_percentage": 100,
 			"ring_balance": {
@@ -84,7 +84,7 @@ func TestZiosStoragePoliciesResponse(t *testing.T) {
 			"name": "MetadataPolicy",
 			"status": "initialised",
 			"protection": "3-way",
-			"default": null,
+			"default": false,
 			"health_status": "normal",
 			"health_percentage": 100,
 			"ring_balance": {
@@ -111,12 +111,12 @@ func TestZiosStoragePoliciesResponse(t *testing.T) {
 	assert.Len(t, resp.ZiosStoragePolicies, 2)
 
 	assert.Equal(t, &vpsaobjectstorage.ZiosStoragePolicy{
-		ID:               "26",
+		ID:               26,
 		InternalName:     "storage-policy-00000002",
 		Name:             "3-way-protection-policy",
 		Status:           "initialised",
 		Protection:       "3-way",
-		Default:          nil,
+		Default:          false,
 		HealthStatus:     "normal",
 		HealthPercentage: 100,
 		RingBalance: vpsaobjectstorage.RingBalance{
@@ -135,7 +135,7 @@ func TestZiosStoragePoliciesResponse(t *testing.T) {
 		Name:             "MetadataPolicy",
 		Status:           "initialised",
 		Protection:       "3-way",
-		Default:          nil,
+		Default:          false,
 		HealthStatus:     "normal",
 		HealthPercentage: 100,
 		RingBalance: vpsaobjectstorage.RingBalance{

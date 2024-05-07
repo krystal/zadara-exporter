@@ -25,8 +25,6 @@ To start the Zadara Exporter server, run the following command:
 
 The exporter is configured using the following environment variables:
 
-- `ZADARA_API_BASE_URL`: The Zadara API base url to connect to. (default: `https://api.zadara.com`)
-- `ZADARA_TOKEN`: The Zadara API token to use for authentication.
 - `ZADARA_LISTEN_ADDR`: The addr to expose the metrics on. (default: `:9090`)
 - `ZADARA_LISTN_PATH`: The path to expose the metrics on. (default: `/metrics`)
 
@@ -35,10 +33,17 @@ The exporter is configured using the following environment variables:
 The exporter can also be configured using a configuration file. The configuration file is a YAML file with the following structure:
 
 ```yaml
-api_base_url: 'https://api.zadara.com' # default: 'https://api.zadara.com'
-token: '<ZADARA_API_TOKEN>' # required
-listen_address: ':9091' # default: ':9090'
-listen_path: '/metr' # default: '/metrics'
+listen_address: ':9091' # default: :9090
+listen_path: /metr # default: /metrics
+targets:
+  - name: snakes
+    url: https://api.snakes.com
+    token: snakes
+    cloudName: snakes
+  - name: rats
+    url: https://api.rats.com
+    token: rats
+    cloudName: rats
 ```
 
 The configuration file can be specified using the `ZADARA_CONFIG_FILE` environment variable.
@@ -54,11 +59,9 @@ The exporter can also be configured using command line flags. The following flag
 
 ```sh
 Flags:
-      --api_base_url string     The base URL of the Zadara Command Centre API (default "https://api.zadara.com")
   -h, --help                    help for server
       --listen_address string   The address to listen on for the metrics server (default ":9090")
       --listen_path string      The path to expose the metrics on (default "/metrics")
-      --token string            The API token for the Zadara Command Centre API
 
 Global Flags:
       --config string   The path to the configuration file

@@ -16,9 +16,9 @@ type (
 		NormalPercentage   float64 `json:"normal_percentage"`
 		DegradedPercentage float64 `json:"degraded_percentage"`
 		CriticalPercentage float64 `json:"critical_percentage"`
-		NormalCount        int     `json:"normal_count"`
-		DegradedCount      int     `json:"degraded_count"`
-		CriticalCount      int     `json:"critical_count"`
+		NormalCount        int64   `json:"normal_count"`
+		DegradedCount      int64   `json:"degraded_count"`
+		CriticalCount      int64   `json:"critical_count"`
 	}
 
 	// ZiosStoragePolicy represents a VPSA Object Storage storage policy.
@@ -34,7 +34,7 @@ type (
 		RebalancingPaused                     bool        `json:"rebalancing_paused"`
 		Default                               bool        `json:"default"`
 		HealthStatus                          string      `json:"health_status"`
-		HealthPercentage                      int         `json:"health_percentage"`
+		HealthPercentage                      float64     `json:"health_percentage"`
 		RingBalance                           RingBalance `json:"ring_balance"`
 		UsedCapacity                          int64       `json:"used_capacity"`
 		FreeCapacity                          int64       `json:"free_capacity"`

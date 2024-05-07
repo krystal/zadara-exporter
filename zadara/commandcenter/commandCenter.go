@@ -24,8 +24,9 @@ type (
 
 	// Client represents the client for the Zadara Command Centre API.
 	Client struct {
-		BaseURL string
-		C       *http.Client
+		BaseURL   string
+		CloudName string
+		C         *http.Client
 		VPSAObjectStorage
 	}
 )
@@ -49,10 +50,11 @@ func NewClientFromToken(baseURL, apiToken string) *Client {
 // NewClient creates a new instance of the Client struct.
 // It initialises the Client with the provided baseURL and http.Client.
 // It also initialises the VPSAObjectStorage field with a new instance of the vpsaobjectstorage.Client.
-func NewClient(baseURL string, c *http.Client) *Client {
+func NewClient(baseURL string, c *http.Client, cloudName string) *Client {
 	return &Client{
 		BaseURL:           baseURL,
 		C:                 c,
+		CloudName:         cloudName,
 		VPSAObjectStorage: vpsaobjectstorage.NewClient(baseURL, c),
 	}
 }

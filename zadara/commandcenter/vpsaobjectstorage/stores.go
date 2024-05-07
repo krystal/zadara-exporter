@@ -27,22 +27,22 @@ type (
 		Description           string                          `json:"description"`
 		Status                string                          `json:"status"`
 		EngineType            string                          `json:"engine_type"`
-		Vcpus                 int                             `json:"vcpus"`
-		RAM                   int                             `json:"ram"`
+		Vcpus                 int64                           `json:"vcpus"`
+		RAM                   int64                           `json:"ram"`
 		HTTPSTermination      bool                            `json:"https_termination"`
 		Image                 string                          `json:"image"`
-		Drives                int                             `json:"drives"`
-		Cache                 int                             `json:"cache"`
-		VirtualControllers    int                             `json:"virtual_controllers"`
+		Drives                int64                           `json:"drives"`
+		Cache                 int64                           `json:"cache"`
+		VirtualControllers    int64                           `json:"virtual_controllers"`
 		IPAddress             string                          `json:"ip_address"`
 		PublicIP              *string                         `json:"public_ip"`
 		ManagementURL         string                          `json:"management_url"`
-		StoragePoliciesCount  int                             `json:"storage_policies_count"`
-		MetadataPoliciesCount int                             `json:"metadata_policies_count"`
-		AccountsCount         int                             `json:"accounts_count"`
-		UsersCount            int                             `json:"users_count"`
-		ContainersCount       int                             `json:"containers_count"`
-		ObjectsCount          int                             `json:"objects_count"`
+		StoragePoliciesCount  int64                           `json:"storage_policies_count"`
+		MetadataPoliciesCount int64                           `json:"metadata_policies_count"`
+		AccountsCount         int64                           `json:"accounts_count"`
+		UsersCount            int64                           `json:"users_count"`
+		ContainersCount       int64                           `json:"containers_count"`
+		ObjectsCount          int64                           `json:"objects_count"`
 		NetworkConfiguration  map[string]NetworkConfiguration `json:"network_configuration"`
 		CreatedAt             string                          `json:"created_at"`
 		UpdatedAt             string                          `json:"updated_at"`

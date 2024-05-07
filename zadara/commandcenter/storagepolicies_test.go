@@ -73,8 +73,8 @@ func TestClient_GetAllStoragePolicies(t *testing.T) {
 	}
 	policyRes := &vpsaobjectstorage.ZiosStoragePoliciesResponse{
 		ZiosStoragePolicies: []*vpsaobjectstorage.ZiosStoragePolicy{
-			{ID: "1"},
-			{ID: "2"},
+			{ID: 1},
+			{ID: 2},
 		},
 	}
 
@@ -87,15 +87,15 @@ func TestClient_GetAllStoragePolicies(t *testing.T) {
 
 	// Call the method being tested.
 	ctx := context.Background()
-	policies, err := client.GetAllStoragePolicies(ctx, cloudName)
+	stores, err := client.GetAllStoragePolicies(ctx, cloudName)
 
 	// Assert the results.
 	require.NoError(t, err)
-	assert.Len(t, policies, 4)
-	assert.Equal(t, "1", policies[0].ID)
-	assert.Equal(t, "2", policies[1].ID)
-	assert.Equal(t, "1", policies[2].ID)
-	assert.Equal(t, "2", policies[3].ID)
+	assert.Len(t, stores, 2)
+	assert.Equal(t, 1, stores[0].Policies[0].ID)
+	assert.Equal(t, 2, stores[0].Policies[1].ID)
+	assert.Equal(t, 1, stores[1].Policies[0].ID)
+	assert.Equal(t, 2, stores[1].Policies[1].ID)
 
 	// Verify the expected calls were made.
 	mockClient.AssertExpectations(t)

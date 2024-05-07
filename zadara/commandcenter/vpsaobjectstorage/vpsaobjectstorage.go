@@ -8,8 +8,9 @@ import (
 type (
 	// Client represents the client for the VPSA Object Storage API.
 	Client struct {
-		BaseURL string
-		C       *http.Client
+		BaseURL   string
+		C         *http.Client
+		CloudName string
 	}
 )
 
