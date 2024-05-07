@@ -5,6 +5,7 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/krystal/zadara-exporter/config"
 	"github.com/krystal/zadara-exporter/zadara/commandcenter/vpsaobjectstorage"
 )
 
@@ -31,30 +32,18 @@ type (
 	}
 )
 
-// NewClientFromToken creates a new client with the provided base URL, API token, and cloud name.
-// It returns a pointer to the created Client.
-func NewClientFromToken(baseURL, apiToken, cloudName string) *Client {
-	httpClient := &http.Client{
-		Transport: newAddTokenHeaderTransport(http.DefaultTransport, apiToken),
-	}
-
-	return &Client{
-		BaseURL:           baseURL,
-		C:                 httpClient,
-		CloudName:         cloudName,
-		VPSAObjectStorage: vpsaobjectstorage.NewClient(baseURL, httpClient),
-	}
-}
-
 // NewClient creates a new instance of the Client struct.
-// It initialises the Client with the provided baseURL, http.Client, and cloudName.
-// It also creates a new instance of the vpsaobjectstorage.Client and assigns
-// it to the VPSAObjectStorage field of the Client.
-func NewClient(baseURL string, c *http.Client, cloudName string) *Client {
+// It takes a pointer to a config.Target struct as a parameter and returns a pointer to the Client struct.
+// The Client struct contains the necessary information to interact with the Zadara Command Centre API.
+func NewClient(target *config.Target) *Client {
+	httpClient := &http.Client{
+		Transport: newAddTokenHeaderTransport(http.DefaultTransport, target.Token),
+	}
+
 	return &Client{
-		BaseURL:           baseURL,
-		C:                 c,
-		CloudName:         cloudName,
-		VPSAObjectStorage: vpsaobjectstorage.NewClient(baseURL, c),
+		BaseURL:           target.APIBaseURL,
+		C:                 httpClient,
+		CloudName:         target.CloudName,
+		VPSAObjectStorage: vpsaobjectstorage.NewClient(target.APIBaseURL, httpClient),
 	}
 }

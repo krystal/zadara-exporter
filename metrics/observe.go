@@ -97,11 +97,15 @@ func (sm *StorageMetrics) observeStores(
 }
 
 // StorageMetricsObserve returns a metric callback function that observes storage metrics.
-// It takes a ZadaraClient as a parameter and returns an error.
-// The callback function uses the provided ZadaraClient to retrieve storage policies and observe storage metrics.
-// It iterates over each policy and observes the free and used storage capacities using the provided metric.Observer.
-// The observed metrics include the cloud name and policy name as attributes.
-// If an error occurs while retrieving the storage policies, it is returned as an error.
+
+// StorageMetricsObserve returns a metric callback function that observes storage metrics for the given targets.
+// It takes a slice of targets and a newclient function as parameters.
+// The newclient function is used to create a new client for each target.
+// The metric callback function iterates over the targets,
+// creates a client for each target using the newclient function,
+// and calls the observeStores function to observe the storage metrics for the target using the client.
+// If any error occurs during the observation, it is returned.
+// If all observations are successful, nil is returned.
 func (sm *StorageMetrics) StorageMetricsObserve(targets []*config.Target, newclient ClientFunc) metric.Callback {
 	// Define the metric callback function.
 	return func(ctx context.Context, o metric.Observer) error {
