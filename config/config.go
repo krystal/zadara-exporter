@@ -10,7 +10,7 @@ import (
 type (
 	// Target represents the configuration for a target.
 	Target struct {
-		APIBaseURL string `mapstructure:"api_base_url"`
+		APIBaseURL string `mapstructure:"url"`
 		CloudName  string `mapstructure:"cloud_name"`
 		Name       string `mapstructure:"name"`
 		Token      string `mapstructure:"token"`
