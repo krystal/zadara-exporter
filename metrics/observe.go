@@ -16,7 +16,7 @@ type (
 	ClientFunc func(ctx context.Context, target *config.Target) ZadaraClient
 )
 
-func (sm *StorageMetrics) observePolicies(
+func (sm *StorageMetrics) observePolicy(
 	o metric.Observer,
 	policy *vpsaobjectstorage.ZiosStoragePolicy,
 	attrs metric.MeasurementOption,
@@ -87,7 +87,7 @@ func (sm *StorageMetrics) observeStores(
 				attribute.String("policy_name", policy.Name),
 			)
 
-			if err := sm.observePolicies(o, policy, policyLevelAttrs); err != nil {
+			if err := sm.observePolicy(o, policy, policyLevelAttrs); err != nil {
 				return err
 			}
 		}
@@ -95,8 +95,6 @@ func (sm *StorageMetrics) observeStores(
 
 	return nil
 }
-
-// StorageMetricsObserve returns a metric callback function that observes storage metrics.
 
 // StorageMetricsObserve returns a metric callback function that observes storage metrics for the given targets.
 // It takes a slice of targets and a newclient function as parameters.
