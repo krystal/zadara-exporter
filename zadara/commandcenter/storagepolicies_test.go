@@ -83,11 +83,14 @@ func TestClient_GetAllStoragePolicies(t *testing.T) {
 	mockClient.On("GetStoragePolicies", mock.Anything, cloudName, 2).Return(policyRes, nil).Once()
 
 	// Create the client under test.
-	client := commandcenter.Client{VPSAObjectStorage: mockClient}
+	client := commandcenter.Client{
+		CloudName:         cloudName,
+		VPSAObjectStorage: mockClient,
+	}
 
 	// Call the method being tested.
 	ctx := context.Background()
-	stores, err := client.GetAllStoragePolicies(ctx, cloudName)
+	stores, err := client.GetAllStoragePolicies(ctx)
 
 	// Assert the results.
 	require.NoError(t, err)

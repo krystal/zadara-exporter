@@ -19,7 +19,6 @@ type (
 // It returns a slice of ZiosStoragePolicy objects and an error, if any.
 func (c *Client) GetAllStoragePolicies(
 	ctx context.Context,
-	cloudName string,
 ) ([]*StoreStoragePolicies, error) {
 	storeRes, err := c.GetStores(ctx, c.CloudName)
 	if err != nil {
@@ -29,9 +28,11 @@ func (c *Client) GetAllStoragePolicies(
 	stores := make([]*StoreStoragePolicies, len(storeRes.Zioses))
 
 	for index, store := range storeRes.Zioses {
-		stores[index].Store = store
+		stores[index] = &StoreStoragePolicies{
+			Store: store,
+		}
 
-		policyRes, err := c.GetStoragePolicies(ctx, cloudName, store.ID)
+		policyRes, err := c.GetStoragePolicies(ctx, c.CloudName, store.ID)
 		if err != nil {
 			return nil, fmt.Errorf("error getting storage policies: %w", err)
 		}

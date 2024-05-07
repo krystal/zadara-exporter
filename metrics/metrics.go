@@ -35,10 +35,7 @@ type (
 
 	// ZadaraClient provides the client for the Zadara storage.
 	ZadaraClient interface {
-		GetAllStoragePolicies(
-			ctx context.Context,
-			cloudName string,
-		) ([]*commandcenter.StoreStoragePolicies, error)
+		GetAllStoragePolicies(ctx context.Context) ([]*commandcenter.StoreStoragePolicies, error)
 	}
 )
 

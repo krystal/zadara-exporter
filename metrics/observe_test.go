@@ -28,9 +28,8 @@ type (
 
 func (m *mockZadaraClient) GetAllStoragePolicies(
 	ctx context.Context,
-	cloudName string,
 ) ([]*commandcenter.StoreStoragePolicies, error) {
-	args := m.Called(ctx, cloudName)
+	args := m.Called(ctx)
 
 	firstArg, ok := args.Get(0).([]*commandcenter.StoreStoragePolicies)
 	if !ok {
@@ -65,7 +64,7 @@ func TestStorageMetricsObserve(t *testing.T) {
 	observer := new(mockObserver)
 
 	// Set up expectations for the mock client.
-	mockClient.On("GetAllStoragePolicies", mock.Anything, "cloudName").Return([]*commandcenter.StoreStoragePolicies{
+	mockClient.On("GetAllStoragePolicies", mock.Anything).Return([]*commandcenter.StoreStoragePolicies{
 		{
 			Store: &vpsaobjectstorage.Zios{
 				AccountsCount:   2,
@@ -243,5 +242,5 @@ func TestStorageMetricsObserve(t *testing.T) {
 	require.NoError(t, err)
 
 	// Assert that the mock client's method was called with the expected arguments.
-	mockClient.AssertCalled(t, "GetAllStoragePolicies", mock.Anything, "cloudName")
+	mockClient.AssertCalled(t, "GetAllStoragePolicies", mock.Anything)
 }

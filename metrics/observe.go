@@ -50,7 +50,7 @@ func (sm *StorageMetrics) observeStores(
 	client ZadaraClient,
 ) error {
 	// Retrieve the storage policies from the ZadaraClient.
-	stores, err := client.GetAllStoragePolicies(ctx, target.CloudName)
+	stores, err := client.GetAllStoragePolicies(ctx)
 	if err != nil {
 		return fmt.Errorf("error getting storage policies: %w", err)
 	}
