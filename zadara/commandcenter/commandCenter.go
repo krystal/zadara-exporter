@@ -41,9 +41,9 @@ func NewClient(target *config.Target) *Client {
 	}
 
 	return &Client{
-		BaseURL:           target.APIBaseURL,
+		BaseURL:           target.URL,
 		C:                 httpClient,
 		CloudName:         target.CloudName,
-		VPSAObjectStorage: vpsaobjectstorage.NewClient(target.APIBaseURL, httpClient),
+		VPSAObjectStorage: vpsaobjectstorage.NewClient(target.URL, httpClient),
 	}
 }
