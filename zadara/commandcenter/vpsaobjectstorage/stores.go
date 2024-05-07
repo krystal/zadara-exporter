@@ -35,7 +35,7 @@ type (
 		Cache                 int                             `json:"cache"`
 		VirtualControllers    int                             `json:"virtual_controllers"`
 		IPAddress             string                          `json:"ip_address"`
-		PublicIP              interface{}                     `json:"public_ip"`
+		PublicIP              *string                         `json:"public_ip"`
 		ManagementURL         string                          `json:"management_url"`
 		StoragePoliciesCount  int                             `json:"storage_policies_count"`
 		MetadataPoliciesCount int                             `json:"metadata_policies_count"`
@@ -61,12 +61,15 @@ type (
 // The cloudName parameter specifies the name of the cloud.
 // The function returns a pointer to the ZiosResponse and an error, if any.
 //
-// API Docs
+// # API Docs
+//
 // Returns a list of all VPSA Object Storage object stores.
 // GET /api/clouds/{cloud_name}/zioses(.xml/json)
+//
 // Example:
 // curl -X GET -H "Content-Type: application/json" -H "X-Token: <token>" \
 // 'https://<command-center-ip>:8888/api/clouds/{cloud_name}/zioses.json?page=1&per_page=10'
+//
 // page	Integer	The page number to start from.
 // per_page	Integer	The total number of records to return.
 func (c *Client) GetStores(

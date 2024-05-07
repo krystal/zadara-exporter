@@ -55,9 +55,11 @@ type (
 // If there is an error creating the request, sending the request, closing the response body,
 // or decoding the response, an error is returned.
 //
-// API Docs
+// # API Docs
+//
 // Returns the list of a VPSA Object Storage storage policies.
 // GET /api/clouds/{cloud_name}/zioses/{id or internal-name}/storage_policies(.xml/json)
+//
 // Example:
 // curl -X GET -H "Content-Type: application/json" -H "X-Token: <token>" \
 // 'https://<command-center-ip>:8888/api/clouds/{cloud_name}/zioses/{id or internal-name}/storage_policies.json'.
