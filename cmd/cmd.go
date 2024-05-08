@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+//nolint:gochecknoglobals // These variables are set using ldflags.
 var (
 	version = "0.0.0-dev"
 	commit  = ""
