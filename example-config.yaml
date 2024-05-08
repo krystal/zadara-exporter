@@ -2,10 +2,10 @@ listen_address: :9090
 listen_path: /metrics
 targets:
   - name: London
-    url: https://ccvm-krystal-01.zadarastorage.com:8888
+    url: https://command-center-1.zadarastorage.com
     token: "<TOKEN HERE>"
-    cloud_name: krystal-01
+    cloud_name: cc1
   # - name: New York
-  #   url: https://ccvm-krystal-02.zadarastorage.com:8888
+  #   url: https://command-center-2.zadarastorage.com
   #   token: "<TOKEN HERE>"
-  #   cloud_name: krystal-02
+  #   cloud_name: cc2

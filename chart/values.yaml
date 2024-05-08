@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/krystal/cert-manager-webhook-katapult
+  repository: ghcr.io/krystal/zadara-exporter
   tag: null
   pullPolicy: IfNotPresent
   imagePullSecrets: null
