@@ -1,0 +1,6 @@
+bin/tools
+config.yaml
+coverage*
+dist/
+/katalet
+vendor/
