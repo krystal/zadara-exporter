@@ -2,6 +2,7 @@
 package config
 
 import (
+	"fmt"
 	"log/slog"
 
 	"github.com/spf13/viper"
@@ -16,6 +17,16 @@ type (
 		Token     string `mapstructure:"token"`
 	}
 )
+
+// GetTargets returns the list of targets from the configuration.
+func GetTargets() ([]*Target, error) {
+	var targets []*Target
+	if err := viper.UnmarshalKey("targets", &targets); err != nil {
+		return nil, fmt.Errorf("could not unmarshal targets: %w", err)
+	}
+
+	return targets, nil
+}
 
 // Setup initialises the configuration for the zadara-exporter.
 // It reads the configuration file in YAML format and sets up the configuration settings.

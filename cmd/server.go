@@ -1,11 +1,18 @@
 package cmd
 
 import (
+	"context"
+	"fmt"
+	"log"
 	"log/slog"
+	"net/http"
 	"os"
+	"time"
 
 	"github.com/krystal/zadara-exporter/config"
+	"github.com/krystal/zadara-exporter/health"
 	"github.com/krystal/zadara-exporter/metrics"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -15,6 +22,47 @@ func must(err error) {
 		slog.Error("error setting up prometheus exporter", "error", err)
 		os.Exit(1)
 	}
+}
+
+func serve(ctx context.Context) error {
+	mux := http.NewServeMux()
+
+	// Create a new HTTP handler for serving the metrics.
+	mux.Handle(viper.GetString("listen_path"), promhttp.Handler())
+	// Register the health handler.
+	health.RegisterHandler(mux)
+
+	const ReadHeaderTimeout = 10 * time.Second
+
+	server := &http.Server{
+		Addr:              viper.GetString("listen_address"),
+		Handler:           mux,
+		ReadHeaderTimeout: ReadHeaderTimeout,
+	}
+
+	slog.Info("starting Metrics server",
+		"address", viper.GetString("listen_address"),
+		"path", viper.GetString("listen_path"),
+	)
+
+	// Start the HTTP server in a separate goroutine.
+	go func() {
+		err := server.ListenAndServe()
+		if err != nil {
+			log.Fatalf("error starting HTTP server: %v", err)
+		}
+	}()
+
+	// Wait for the context to be done.
+	<-ctx.Done()
+
+	// Shutdown the HTTP server gracefully.
+	err := server.Shutdown(ctx)
+	if err != nil {
+		return fmt.Errorf("error shutting down HTTP server: %w", err)
+	}
+
+	return nil
 }
 
 // NewServerCommand creates a new server command for the zadara-exporter.
@@ -35,8 +83,7 @@ func NewServerCommand() *cobra.Command {
 				return
 			}
 
-			var targets []*config.Target
-			err := viper.UnmarshalKey("targets", &targets)
+			targets, err := config.GetTargets()
 			if err != nil {
 				slog.Error("error unmarshalling targets", "error", err)
 
@@ -49,7 +96,7 @@ func NewServerCommand() *cobra.Command {
 				return
 			}
 
-			if err := metrics.Serve(cmd.Context()); err != nil {
+			if err := serve(cmd.Context()); err != nil {
 				slog.Error("error serving metrics", "error", err)
 
 				return
