@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "zadaraexporter.fullname" . }}
+  labels:
+    {{- include "zadaraexporter.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "zadaraexporter.selectorLabels" . | nindent 6 }}
+      component: webhook
+  template:
+    metadata:
+      labels:
+        {{- include "zadaraexporter.selectorLabels" . | nindent 8 }}
+        component: webhook
+    spec:
+      serviceAccountName: {{ include "zadaraexporter.fullname" . }}
+      {{- with .Values.image.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository}}:{{ .Values.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              scheme: HTTPS
+              path: /healthz
+              port: https
+          readinessProbe:
+            timeoutSeconds: 5
+            httpGet:
+              scheme: HTTPS
+              path: /healthz
+              port: https
+          volumeMounts:
+             - name: config-volume
+               mountPath: /etc/zadara_exporter
+      resources:  
+{{ toYaml .Values.resources | indent 8 }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "zadaraexporter.fullname" . }}
+      {{- with .Values.nodeSelector }}
+        nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

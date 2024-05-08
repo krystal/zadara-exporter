@@ -1,0 +1,25 @@
+image:
+  repository: ghcr.io/krystal/cert-manager-webhook-katapult
+  tag: null
+  pullPolicy: IfNotPresent
+  imagePullSecrets: null
+
+service:
+  type: ClusterIP
+  port: 443
+
+nameOverride: ""
+fullnameOverride: ""
+resources: {}
+nodeSelector: {}
+affinity: {}
+tolerations: {}
+
+config:
+  listen_address: :9090
+  listen_path: /metrics
+  targets:
+    - name: ''
+      url: ''
+      token: ''
+      cloud_name: ''

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zadaraexporter.fullname" . }}
+  labels:
+    {{- include "zadaraexporter.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: https
+      protocol: TCP
+      name: https
+  selector:
+    {{- include "zadaraexporter.selectorLabels" . | nindent 4 }}
+    component: webhook
