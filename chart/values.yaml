@@ -8,12 +8,6 @@ service:
   type: ClusterIP
   port: 443
 
-nameOverride: ""
-fullnameOverride: ""
-resources: {}
-nodeSelector: {}
-affinity: {}
-tolerations: {}
 
 config:
   listen_address: :9090
@@ -23,3 +17,11 @@ config:
       url: ''
       token: ''
       cloud_name: ''
+
+nameOverride: ""
+fullnameOverride: ""
+resources: {}
+nodeSelector: {}
+affinity: {}
+tolerations: {}
+

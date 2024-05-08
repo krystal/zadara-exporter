@@ -36,19 +36,3 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/name: {{ include "zadaraexporter.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
-{{- define "zadaraexporter.selfSignedIssuer" -}}
-{{ printf "%s-selfsign" (include "zadaraexporter.fullname" .) }}
-{{- end -}}
-
-{{- define "zadaraexporter.rootCAIssuer" -}}
-{{ printf "%s-ca" (include "zadaraexporter.fullname" .) }}
-{{- end -}}
-
-{{- define "zadaraexporter.rootCACertificate" -}}
-{{ printf "%s-ca" (include "zadaraexporter.fullname" .) }}
-{{- end -}}
-
-{{- define "zadaraexporter.servingCertificate" -}}
-{{ printf "%s-webhook-tls" (include "zadaraexporter.fullname" .) }}
-{{- end -}}
