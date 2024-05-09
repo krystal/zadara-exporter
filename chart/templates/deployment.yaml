@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "zadaraexporter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "zadaraexporter.labels" . | nindent 4 }}
   annotations:

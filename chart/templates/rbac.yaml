@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ include "zadaraexporter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "zadaraexporter.labels" . | nindent 4 }}
 ---
