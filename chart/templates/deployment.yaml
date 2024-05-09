@@ -43,12 +43,13 @@ spec:
           volumeMounts:
              - name: config-volume
                mountPath: /etc/zadara_exporter
+               readOnly: true
       resources:  
 {{ toYaml .Values.resources | indent 8 }}
       volumes:
         - name: config-volume
-          configMap:
-            name: {{ include "zadaraexporter.fullname" . }}
+          secret:
+            secretName: {{ include "zadaraexporter.fullname" . }}
       {{- with .Values.nodeSelector }}
         nodeSelector:
 {{ toYaml . | indent 8 }}
