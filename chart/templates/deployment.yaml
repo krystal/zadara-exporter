@@ -46,7 +46,7 @@ spec:
               port: https
           volumeMounts:
              - name: config-volume
-               mountPath: /etc/zadara_exporter
+               mountPath: /etc/zadara-exporter
                readOnly: true
       resources:  
 {{ toYaml .Values.resources | indent 8 }}
