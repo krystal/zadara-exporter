@@ -15,7 +15,7 @@ FROM alpine:3 as certs
 RUN apk update && apk add --no-cache ca-certificates && update-ca-certificates
 
 WORKDIR /
-COPY --from=builder /zadara-exporter /
+COPY --from=builder /work/zadara-exporter /
 COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/zadara-exporter", "server"]
