@@ -49,7 +49,16 @@ spec:
       volumes:
         - name: config-volume
           secret:
+          {{- if .Values.configSecretName }}
+            secretName: {{ .Values.configSecretName }}
+            {{- if .Values.configSecretKey }}
+            items:
+              - key: {{ .Values.configSecretKey }}
+                path: config.yaml
+            {{ end }}
+          {{- else }}
             secretName: {{ include "zadaraexporter.fullname" . }}
+          {{ end }}
       {{- with .Values.nodeSelector }}
         nodeSelector:
 {{ toYaml . | indent 8 }}

@@ -39,3 +39,4 @@ archives:
     name_template: |-
       {{ .ProjectName }}-{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}
     wrap_in_directory: true
+

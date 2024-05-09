@@ -9,6 +9,9 @@ service:
   port: 443
 
 
+configSecretName: ""
+configSecretKey: ""
+
 config:
   listen_address: :9090
   listen_path: /metrics
