@@ -1,10 +1,9 @@
-
 FROM alpine:3 as binary
 
-ARG TARGETPLATFORM
 RUN mkdir -p /tmp/dist
 COPY ./dist /tmp/dist
 
+ARG TARGETPLATFORM
 RUN set -e \
     && echo "TARGETPLATFORM=$TARGETPLATFORM" \
     && if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
@@ -20,7 +19,12 @@ RUN set -e \
     exit 1; \
     fi
 
-FROM scratch
+FROM alpine:3 as certs
+
+RUN apk update && apk add --no-cache ca-certificates && update-ca-certificates
+
 WORKDIR /
 COPY --from=binary /zadara-exporter /
-ENTRYPOINT ["/zadara-exporter"]
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/zadara-exporter", "server"]
