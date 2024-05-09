@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{include "zadaraexporter.generateName" (dict "root" . "suffix" "web")}}
+  name: {{include "zadaraexporter.generateName" (dict "root" . "suffix" "zadaraexporter")}}
   namespace: {{ .Release.Namespace }}
   labels: {{- include "zadaraexporter.labels" . | nindent 4 }}
   annotations:
