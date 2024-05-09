@@ -6,7 +6,7 @@ image:
 
 service:
   type: ClusterIP
-  port: 443
+  port: 9090
 
 
 configSecretName: ""
@@ -20,6 +20,13 @@ config:
       url: ''
       token: ''
       cloud_name: ''
+
+metrics:
+  serviceMonitor:
+    interval: 30s
+
+deployment:
+  argocd: false
 
 nameOverride: ""
 fullnameOverride: ""

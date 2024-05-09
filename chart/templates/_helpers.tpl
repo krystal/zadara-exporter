@@ -2,6 +2,12 @@
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{/* Generate a name for a manifest including the release name */}}
+{{- define "zadaraexporter.generateName" -}}
+{{- $fullName := printf "%s-%s" (include "zadaraexporter.name" .root) .suffix -}}
+{{- $fullName | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{- define "zadaraexporter.determineFullname" -}}
 {{- if contains .ChartName .ReleaseName }}
 {{- .ReleaseName | trunc 63 | trimSuffix "-" }}
@@ -36,3 +42,18 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/name: {{ include "zadaraexporter.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/* ArgoCD annotations */}}
+{{- define "zadaraexporter.argocdAnnotations" -}}
+{{- if .root.Values.deployment.argocd -}}
+{{- if .wave -}}
+argocd.argoproj.io/sync-wave: {{ .wave | quote }}
+{{ end -}}
+{{- if .hook -}}
+argocd.argoproj.io/hook: {{ .hook | quote }}
+{{ if .deletePolicy -}}
+argocd.argoproj.io/hook-delete-policy: {{ .deletePolicy | quote }}
+{{ end -}}
+{{ end -}}
+{{ end -}}
+{{- end -}}

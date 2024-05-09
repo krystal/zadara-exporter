@@ -4,6 +4,8 @@ metadata:
   name: {{ include "zadaraexporter.fullname" . }}
   labels:
     {{- include "zadaraexporter.labels" . | nindent 4 }}
+  annotations:
+    {{- include "zadaraexporter.argocdAnnotations" (dict "root" . "wave" 10) | nindent 4 }}
 spec:
   replicas: 1
   selector:
