@@ -8,14 +8,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-//nolint:gochecknoglobals // These variables are set using ldflags.
-var (
-	version = "0.0.0-dev"
-	commit  = ""
-)
-
 // NewRootCommand creates a new root command for the zadara-exporter.
-func NewRootCommand() *cobra.Command {
+func NewRootCommand(version string, commit string) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "zadara-exporter",
 		Short:   "Zadara exporter for Prometheus",

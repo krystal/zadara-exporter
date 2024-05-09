@@ -69,8 +69,8 @@ endif
 
 $(BINARY): $(SOURCES)
 	go build $(V) -o "$@" -ldflags "$(LDFLAGS) \
-		-X github.com/krystal/zadara-exporter/cmd.version=$(VERSION) \
-		-X github.com/krystal/zadara-exporter/cmd.commit=$(GIT_SHA)"
+		-X main.version=$(VERSION) \
+		-X main.commit=$(GIT_SHA)"
 
 .PHONY: build
 build: $(BINARY)
