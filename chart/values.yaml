@@ -8,21 +8,20 @@ service:
   type: ClusterIP
   port: 9090
 
-
-configSecretName: ""
-configSecretKey: ""
+configSecretName: null
+configSecretKey: null
 
 config:
-  listen_address: :9090
-  listen_path: /metrics
   targets:
-    - name: ''
-      url: ''
-      token: ''
-      cloud_name: ''
+    []
+    # - name: ""
+    #   url: ""
+    #   token: ""
+    #   cloud_name: ""
 
 metrics:
   serviceMonitor:
+    enabled: false
     interval: 30s
 
 deployment:
@@ -34,4 +33,3 @@ resources: {}
 nodeSelector: {}
 affinity: {}
 tolerations: {}
-

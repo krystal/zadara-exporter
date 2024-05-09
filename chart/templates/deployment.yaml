@@ -30,25 +30,25 @@ spec:
           image: {{ .Values.image.repository}}:{{ .Values.image.tag | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: https
-              containerPort: 443
+            - name: http
+              containerPort: 9090
               protocol: TCP
           livenessProbe:
             httpGet:
-              scheme: HTTPS
+              scheme: HTTP
               path: /healthz
-              port: https
+              port: http
           readinessProbe:
             timeoutSeconds: 5
             httpGet:
-              scheme: HTTPS
+              scheme: HTTP
               path: /healthz
-              port: https
+              port: http
           volumeMounts:
              - name: config-volume
                mountPath: /etc/zadara-exporter
                readOnly: true
-      resources:  
+      resources:
 {{ toYaml .Values.resources | indent 8 }}
       volumes:
         - name: config-volume

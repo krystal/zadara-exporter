@@ -1,3 +1,4 @@
+{{- if .Values.metrics.serviceMonitor.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -11,9 +12,10 @@ spec:
   endpoints:
     - honorLabels: true
       interval: {{ .Values.metrics.serviceMonitor.interval }}
-      port: metrics
+      port: http
       path: /metrics
   selector:
-    matchLabels: 
+    matchLabels:
       {{- include "zadaraexporter.selectorLabels" . | nindent 6 }}
       k8s.katapult.io/component: zadaraexporter
+{{- end}}
