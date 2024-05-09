@@ -11,12 +11,13 @@ spec:
   selector:
     matchLabels:
       {{- include "zadaraexporter.selectorLabels" . | nindent 6 }}
-      component: webhook
+      component: zadaraexporter
   template:
     metadata:
       labels:
         {{- include "zadaraexporter.selectorLabels" . | nindent 8 }}
-        component: webhook
+        component: zadaraexporter
+        k8s.katapult.io/component: zadaraexporter
     spec:
       serviceAccountName: {{ include "zadaraexporter.fullname" . }}
       {{- with .Values.image.imagePullSecrets }}
