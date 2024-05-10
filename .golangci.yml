@@ -343,11 +343,11 @@ linters:
     - dupl
     - dupword
     - durationcheck
+    - err113
     - errcheck
     - errchkjson
     - errname
     - errorlint
-    - execinquery
     - exhaustive
     - exportloopref
     - forbidigo
@@ -364,10 +364,8 @@ linters:
     - gocyclo
     - godot
     - godox
-    - goerr113
     - gofumpt
     - goheader
-    - gomnd
     - gomoddirectives
     - goprintffuncname
     - gosec
@@ -387,6 +385,7 @@ linters:
     - makezero
     - mirror
     - misspell
+    - mnd
     - musttag
     - nakedret
     - nestif

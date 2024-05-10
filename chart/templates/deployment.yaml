@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "zadaraexporter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "zadaraexporter.labels" . | nindent 4 }}
+  annotations:
+    {{- include "zadaraexporter.argocdAnnotations" (dict "root" . "wave" 10) | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "zadaraexporter.selectorLabels" . | nindent 6 }}
+      component: zadaraexporter
+  template:
+    metadata:
+      labels:
+        {{- include "zadaraexporter.selectorLabels" . | nindent 8 }}
+        component: zadaraexporter
+        k8s.katapult.io/component: zadaraexporter
+    spec:
+      serviceAccountName: {{ include "zadaraexporter.fullname" . }}
+      {{- with .Values.image.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository}}:{{ .Values.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 9090
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /healthz
+              port: http
+          readinessProbe:
+            timeoutSeconds: 5
+            httpGet:
+              scheme: HTTP
+              path: /healthz
+              port: http
+          volumeMounts:
+             - name: config-volume
+               mountPath: /etc/zadara-exporter
+               readOnly: true
+      resources:
+{{ toYaml .Values.resources | indent 8 }}
+      volumes:
+        - name: config-volume
+          secret:
+          {{- if .Values.configSecretName }}
+            secretName: {{ .Values.configSecretName }}
+            {{- if .Values.configSecretKey }}
+            items:
+              - key: {{ .Values.configSecretKey }}
+                path: config.yaml
+            {{ end }}
+          {{- else }}
+            secretName: {{ include "zadaraexporter.fullname" . }}
+          {{ end }}
+      {{- with .Values.nodeSelector }}
+        nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

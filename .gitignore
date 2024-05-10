@@ -4,3 +4,4 @@ coverage*
 dist/
 /katalet
 vendor/
+zadara-exporter-*.tgz

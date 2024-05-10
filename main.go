@@ -11,8 +11,14 @@ import (
 	"github.com/krystal/zadara-exporter/cmd"
 )
 
+//nolint:gochecknoglobals // These variables are set using ldflags.
+var (
+	version = "0.0.0-dev"
+	commit  = ""
+)
+
 func mainE() error {
-	rootCmd := cmd.NewRootCommand()
+	rootCmd := cmd.NewRootCommand(version, commit)
 
 	ctx, cancel := signal.NotifyContext(
 		context.Background(),

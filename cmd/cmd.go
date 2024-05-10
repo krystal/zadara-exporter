@@ -2,19 +2,18 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
-// var (
-// 	Version = "0.0.0-dev"
-// ).
-
 // NewRootCommand creates a new root command for the zadara-exporter.
-func NewRootCommand() *cobra.Command {
+func NewRootCommand(version string, commit string) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "zadara-exporter",
-		Short: "Zadara exporter for Prometheus",
+		Use:     "zadara-exporter",
+		Short:   "Zadara exporter for Prometheus",
+		Version: fmt.Sprintf("%s (%s)", version, commit),
 	}
 
 	cmd.PersistentFlags().String("config", "", "The path to the configuration file")

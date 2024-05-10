@@ -1,0 +1,30 @@
+FROM alpine:3 as binary
+
+RUN mkdir -p /tmp/dist
+COPY ./dist /tmp/dist
+
+ARG TARGETPLATFORM
+RUN set -e \
+    && echo "TARGETPLATFORM=$TARGETPLATFORM" \
+    && if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
+    mv /tmp/dist/zadara-exporter_linux_amd64_v1/zadara-exporter /zadara-exporter; \
+    elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+    mv /tmp/dist/zadara-exporter_linux_arm64/zadara-exporter /zadara-exporter; \
+    elif [ "$TARGETPLATFORM" = "linux/arm/v6" ]; then \
+    mv /tmp/dist/zadara-exporter_linux_arm_6/zadara-exporter /zadara-exporter; \
+    elif [ "$TARGETPLATFORM" = "linux/arm/v7" ]; then \
+    mv /tmp/dist/zadara-exporter_linux_arm_7/zadara-exporter /zadara-exporter; \
+    else \
+    echo "Unsupported target platform: $TARGETPLATFORM"; \
+    exit 1; \
+    fi
+
+FROM alpine:3
+
+RUN apk update && apk add --no-cache ca-certificates && update-ca-certificates
+
+WORKDIR /
+COPY --from=binary /zadara-exporter /
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/zadara-exporter", "server"]
