@@ -10,7 +10,7 @@ COPY . .
 
 RUN CGO_ENABLED=0 go build -mod=readonly -a -o zadara-exporter .
 
-FROM alpine:3 as certs
+FROM alpine:3
 
 RUN apk update && apk add --no-cache ca-certificates && update-ca-certificates
 
