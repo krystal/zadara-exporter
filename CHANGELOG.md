@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/krystal/zadara-exporter/compare/v0.0.3...v0.0.4) (2024-05-17)
+
+
+### Bug Fixes
+
+* **chart/servicemonitor:** ensure correct labels are set ([#7](https://github.com/krystal/zadara-exporter/issues/7)) ([6cf11db](https://github.com/krystal/zadara-exporter/commit/6cf11dbf14315f72b670b35051f6b15e97391653))
+
 ## [0.0.3](https://github.com/krystal/zadara-exporter/compare/v0.0.2...v0.0.3) (2024-05-17)
 
 
