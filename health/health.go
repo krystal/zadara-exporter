@@ -18,6 +18,8 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		slog.Error("Error getting targets", "error", err)
 		w.WriteHeader(http.StatusInternalServerError)
+
+		return
 	}
 
 	var couldNotConnect bool
@@ -41,6 +43,8 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if couldNotConnect {
 		slog.Error("Could not connect to targets", "targets", couldNotConnect)
 		w.WriteHeader(http.StatusInternalServerError)
+
+		return
 	}
 
 	w.WriteHeader(http.StatusOK)
