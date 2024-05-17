@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{include "zadaraexporter.generateName" (dict "root" . "suffix" "zadaraexporter")}}
+  name: {{ include "zadaraexporter.generateName" (dict "root" . "suffix" "zadaraexporter") }}
   namespace: {{ .Release.Namespace }}
   labels: {{- include "zadaraexporter.labels" . | nindent 4 }}
   annotations:
@@ -17,5 +17,4 @@ spec:
   selector:
     matchLabels:
       {{- include "zadaraexporter.selectorLabels" . | nindent 6 }}
-      k8s.katapult.io/component: zadaraexporter
-{{- end}}
+{{- end }}

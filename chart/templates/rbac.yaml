@@ -39,5 +39,3 @@ subjects:
     kind: ServiceAccount
     name: {{ include "zadaraexporter.fullname" . }}
     namespace: {{ .Release.Namespace }}
-  
-
