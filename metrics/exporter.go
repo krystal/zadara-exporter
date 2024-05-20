@@ -11,7 +11,10 @@ import (
 // SetupPrometheusExporter initialises and sets up the Prometheus exporter for metrics.
 // It creates a new Prometheus exporter, sets it as the meter provider, and returns any error encountered.
 func SetupPrometheusExporter() error {
-	exporter, err := prometheus.New()
+	exporter, err := prometheus.New(
+		prometheus.WithoutScopeInfo(),
+		prometheus.WithoutTargetInfo(),
+	)
 	if err != nil {
 		return fmt.Errorf("failed to create prometheus exporter: %w", err)
 	}
