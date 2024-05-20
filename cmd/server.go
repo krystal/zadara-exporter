@@ -30,7 +30,7 @@ func serve(ctx context.Context) error {
 	// Create a new HTTP handler for serving the metrics.
 	mux.Handle(viper.GetString("listen_path"), promhttp.Handler())
 	// Register the health handler.
-	health.RegisterHandler(mux)
+	health.RegisterHandler(mux, viper.GetString("health_path"))
 
 	const ReadHeaderTimeout = 10 * time.Second
 
@@ -107,14 +107,17 @@ func NewServerCommand() *cobra.Command {
 
 	viper.SetDefault("listen_address", ":9090")
 	viper.SetDefault("listen_path", metrics.DefaultPath)
+	viper.SetDefault("health_path", health.DefaultPath)
 	viper.SetDefault("namespace", metrics.DefaultNamespace)
 
 	cmd.Flags().String("listen_address", ":9090", "The address to listen on for the metrics server")
 	cmd.Flags().String("listen_path", metrics.DefaultPath, "The path to expose the metrics on")
+	cmd.Flags().String("health_path", health.DefaultPath, "The path to expose the health check on")
 	cmd.Flags().String("namespace", metrics.DefaultNamespace, "The namespace to use for the metrics")
 
 	must(viper.BindPFlag("listen_address", cmd.Flags().Lookup("listen_address")))
 	must(viper.BindPFlag("listen_path", cmd.Flags().Lookup("listen_path")))
+	must(viper.BindPFlag("health_path", cmd.Flags().Lookup("health_path")))
 	must(viper.BindPFlag("namespace", cmd.Flags().Lookup("namespace")))
 
 	return cmd

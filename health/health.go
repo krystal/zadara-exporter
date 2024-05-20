@@ -12,6 +12,9 @@ import (
 // Handler is an HTTP handler for healthchecking purposes.
 type Handler struct{}
 
+// DefaultPath is the default path for the healthcheck handler.
+const DefaultPath = "/healthz"
+
 // ServeHTTP handles the HTTP request and returns a health status.
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	targets, err := config.GetTargets()
@@ -51,7 +54,11 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 // RegisterHandler registers the health handler to the provided router.
-func RegisterHandler(router *http.ServeMux) {
+func RegisterHandler(router *http.ServeMux, path string) {
+	if path == "" {
+		path = DefaultPath
+	}
+
 	handler := &Handler{}
-	router.Handle("/healthz", handler)
+	router.Handle(path, handler)
 }
