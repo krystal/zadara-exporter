@@ -8,10 +8,23 @@ import (
 	"go.opentelemetry.io/otel/sdk/metric"
 )
 
+const (
+	// DefaultNamespace is the default namespace for the Prometheus exporter.
+	DefaultNamespace = "zadara"
+
+	// DefaultPath is the default path for the Prometheus exporter.
+	DefaultPath = "/metrics"
+)
+
 // SetupPrometheusExporter initialises and sets up the Prometheus exporter for metrics.
 // It creates a new Prometheus exporter, sets it as the meter provider, and returns any error encountered.
-func SetupPrometheusExporter() error {
+func SetupPrometheusExporter(namespace string) error {
+	if namespace == "" {
+		namespace = DefaultNamespace
+	}
+
 	exporter, err := prometheus.New(
+		prometheus.WithNamespace(namespace),
 		prometheus.WithoutScopeInfo(),
 		prometheus.WithoutTargetInfo(),
 	)

@@ -42,37 +42,37 @@ type (
 func storeMetrics(meter metric.Meter, storageMetrics *StorageMetrics) error {
 	var err error
 
-	storageMetrics.AccountsCount, err = meter.Int64ObservableGauge("zadara_accounts_count",
+	storageMetrics.AccountsCount, err = meter.Int64ObservableGauge("accounts_count",
 		metric.WithDescription("The number of accounts in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create accounts count gauge: %w", err)
 	}
 
-	storageMetrics.UsersCount, err = meter.Int64ObservableGauge("zadara_users_count",
+	storageMetrics.UsersCount, err = meter.Int64ObservableGauge("users_count",
 		metric.WithDescription("The number of users in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create users count gauge: %w", err)
 	}
 
-	storageMetrics.ContainersCount, err = meter.Int64ObservableGauge("zadara_containers_count",
+	storageMetrics.ContainersCount, err = meter.Int64ObservableGauge("containers_count",
 		metric.WithDescription("The number of containers in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create containers count gauge: %w", err)
 	}
 
-	storageMetrics.ObjectsCount, err = meter.Int64ObservableGauge("zadara_objects_count",
+	storageMetrics.ObjectsCount, err = meter.Int64ObservableGauge("objects_count",
 		metric.WithDescription("The number of objects in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create objects count gauge: %w", err)
 	}
 
-	storageMetrics.DrivesCount, err = meter.Int64ObservableGauge("zadara_drives_count",
+	storageMetrics.DrivesCount, err = meter.Int64ObservableGauge("drives_count",
 		metric.WithDescription("The number of drives in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create drives count gauge: %w", err)
 	}
 
-	storageMetrics.Cache, err = meter.Int64ObservableGauge("zadara_cache",
+	storageMetrics.Cache, err = meter.Int64ObservableGauge("cache",
 		metric.WithDescription("The amount of cache in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create cache gauge: %w", err)
@@ -84,31 +84,31 @@ func storeMetrics(meter metric.Meter, storageMetrics *StorageMetrics) error {
 func storagePolicyMetrics(meter metric.Meter, storageMetrics *StorageMetrics) error {
 	var err error
 
-	storageMetrics.FreeStorage, err = meter.Int64ObservableGauge("zadara_free_storage",
+	storageMetrics.FreeStorage, err = meter.Int64ObservableGauge("free_storage",
 		metric.WithDescription("The amount of free storage in the Zadara store storage policy."))
 	if err != nil {
 		return fmt.Errorf("failed to create free storage gauge: %w", err)
 	}
 
-	storageMetrics.UsedStorage, err = meter.Int64ObservableGauge("zadara_used_storage",
+	storageMetrics.UsedStorage, err = meter.Int64ObservableGauge("used_storage",
 		metric.WithDescription("The amount of used storage in the Zadara store storage policy."))
 	if err != nil {
 		return fmt.Errorf("failed to create used storage gauge: %w", err)
 	}
 
-	storageMetrics.HealthPercentage, err = meter.Float64ObservableGauge("zadara_health_percentage",
+	storageMetrics.HealthPercentage, err = meter.Float64ObservableGauge("health_percentage",
 		metric.WithDescription("The percentage of health in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create health percentage gauge: %w", err)
 	}
 
-	storageMetrics.RebalancePercentage, err = meter.Float64ObservableGauge("zadara_rebalance_percentage",
+	storageMetrics.RebalancePercentage, err = meter.Float64ObservableGauge("rebalance_percentage",
 		metric.WithDescription("The percentage of rebalance in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create rebalance percentage gauge: %w", err)
 	}
 
-	storageMetrics.PercentageDrivesAdded, err = meter.Float64ObservableGauge("zadara_percentage_drives_added",
+	storageMetrics.PercentageDrivesAdded, err = meter.Float64ObservableGauge("percentage_drives_added",
 		metric.WithDescription("The percentage of drives added in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create percentage drives added gauge: %w", err)
@@ -120,39 +120,39 @@ func storagePolicyMetrics(meter metric.Meter, storageMetrics *StorageMetrics) er
 func ringBalanceMetrics(meter metric.Meter, storageMetrics *StorageMetrics) error {
 	var err error
 
-	storageMetrics.RingBalanceNormalPercentage, err = meter.Float64ObservableGauge("zadara_ring_balance_normal_percentage",
+	storageMetrics.RingBalanceNormalPercentage, err = meter.Float64ObservableGauge("ring_balance_normal_percentage",
 		metric.WithDescription("The percentage of normal ring balance in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create ring balance normal percentage gauge: %w", err)
 	}
 
 	storageMetrics.RingBalanceDegradedPercentage, err = meter.Float64ObservableGauge(
-		"zadara_ring_balance_Degraded_percentage",
+		"ring_balance_Degraded_percentage",
 		metric.WithDescription("The percentage of Degraded ring balance in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create ring balance Degraded percentage gauge: %w", err)
 	}
 
 	storageMetrics.RingBalanceCriticalPercentage, err = meter.Float64ObservableGauge(
-		"zadara_ring_balance_critical_percentage",
+		"ring_balance_critical_percentage",
 		metric.WithDescription("The percentage of critical ring balance in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create ring balance critical percentage gauge: %w", err)
 	}
 
-	storageMetrics.RingBalanceNormalCount, err = meter.Int64ObservableGauge("zadara_ring_balance_normal_count",
+	storageMetrics.RingBalanceNormalCount, err = meter.Int64ObservableGauge("ring_balance_normal_count",
 		metric.WithDescription("The count of normal ring balance in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create ring balance normal count gauge: %w", err)
 	}
 
-	storageMetrics.RingBalanceDegradedCount, err = meter.Int64ObservableGauge("zadara_ring_balance_Degraded_count",
+	storageMetrics.RingBalanceDegradedCount, err = meter.Int64ObservableGauge("ring_balance_Degraded_count",
 		metric.WithDescription("The count of Degraded ring balance in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create ring balance Degraded count gauge: %w", err)
 	}
 
-	storageMetrics.RingBalanceCriticalCount, err = meter.Int64ObservableGauge("zadara_ring_balance_critical_count",
+	storageMetrics.RingBalanceCriticalCount, err = meter.Int64ObservableGauge("ring_balance_critical_count",
 		metric.WithDescription("The count of critical ring balance in the Zadara store."))
 	if err != nil {
 		return fmt.Errorf("failed to create ring balance critical count gauge: %w", err)
