@@ -62,12 +62,14 @@ func (sm *StorageMetrics) observeStores(
 	for _, ssc := range stores {
 		store := ssc.Store
 		policies := ssc.Policies
+		storeAttr := attribute.String("store", store.Name+"@"+target.CloudName)
 		storeNameAttr := attribute.String("store_name", store.Name)
 
 		storeLevelAttrs := metric.WithAttributes(
 			targeNameAttr,
 			cloudNameAttr,
 			storeNameAttr,
+			storeAttr,
 		)
 
 		o.ObserveInt64(sm.AccountsCount, store.AccountsCount, storeLevelAttrs)
