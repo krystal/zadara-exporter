@@ -86,6 +86,7 @@ func (sm *StorageMetrics) observeStores(
 				targeNameAttr,
 				cloudNameAttr,
 				storeNameAttr,
+				storeAttr,
 				attribute.String("policy_name", policy.Name),
 			)
 
