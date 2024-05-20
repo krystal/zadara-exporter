@@ -77,7 +77,8 @@ func NewServerCommand() *cobra.Command {
 				return
 			}
 
-			if err := metrics.SetupPrometheusExporter(); err != nil {
+			err := metrics.SetupPrometheusExporter(viper.GetString("namespace"))
+			if err != nil {
 				slog.Error("error setting up prometheus exporter", "error", err)
 
 				return
@@ -105,13 +106,16 @@ func NewServerCommand() *cobra.Command {
 	}
 
 	viper.SetDefault("listen_address", ":9090")
-	viper.SetDefault("listen_path", "/metrics")
+	viper.SetDefault("listen_path", metrics.DefaultPath)
+	viper.SetDefault("namespace", metrics.DefaultNamespace)
 
 	cmd.Flags().String("listen_address", ":9090", "The address to listen on for the metrics server")
-	cmd.Flags().String("listen_path", "/metrics", "The path to expose the metrics on")
+	cmd.Flags().String("listen_path", metrics.DefaultPath, "The path to expose the metrics on")
+	cmd.Flags().String("namespace", metrics.DefaultNamespace, "The namespace to use for the metrics")
 
 	must(viper.BindPFlag("listen_address", cmd.Flags().Lookup("listen_address")))
 	must(viper.BindPFlag("listen_path", cmd.Flags().Lookup("listen_path")))
+	must(viper.BindPFlag("namespace", cmd.Flags().Lookup("namespace")))
 
 	return cmd
 }
