@@ -28,7 +28,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var couldNotConnect bool
 
 	for _, target := range targets {
-		slog.Info("Checking target", "target", target.Name)
+		slog.Debug("Checking target", "target", target.Name)
 		client := commandcenter.NewClient(target)
 
 		_, err := client.GetStores(r.Context(), target.CloudName)
